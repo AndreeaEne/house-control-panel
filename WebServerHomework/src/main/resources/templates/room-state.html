@@ -4,56 +4,59 @@
     <head>
 
         <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--Mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>House Control Panel</title>
 
         <!---Style--->
         <!--Bootstrap 4-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="css/stylesheet.css">
+
     <body>
 
-        <!--Test Data-->
-        <p th:text="'Lights are on = ' + ${roomstate.getLight()}" />
-        <p th:text="'Curtains are on = ' + ${roomstate.getCurtains()}" />
-        <p th:text="'Temperature = ' + ${roomstate.getTemperature()}" />
+        <div class="container">
 
-        <!--Control panel Form-->
-        <form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
-            <table border="1">
-                <!--Lights-->
-                <tr>
-                    <td><label>Light Switch</label></td>
-                    <td><input th:field="*{light}" type="checkbox"  th:checked="${roomstate.getLight()}">
-                </tr>
+            <div class="card card-block m-x-auto text-xs-center">
+                <h3 class="card-title">Control Panel</h3>
+                <p class="card-text">Set the following parameters in order to adjust your room.</p>
 
-                <!--Curtains-->
-                <tr>
-                    <td><label>Curtains Switch</label></td>
-                    <td><input th:field="*{curtains}" type="checkbox" th:checked="${roomstate.getCurtains()}">
-                </tr>
+                <!--Control panel Form-->
+                <form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
+                    <div class="form-group">
+                    <!--Lights-->
+                    <label>Light Switch</label>
+                    <input th:field="*{light}" type="checkbox"  th:checked="${roomstate.getLight()}">
+                    <br>
 
-                <!--Temperature-->
-                <tr>
-                    <td><label>Temperature</label></td>
-                    <td><input th:field="*{temperature}" type="number" min="-15" max="30" th:value="${roomstate.getTemperature()}">
-                </tr>
+                    <!--Curtains-->
+                    <label>Curtains Switch</label>
+                    <input th:field="*{curtains}" type="checkbox" th:checked="${roomstate.getCurtains()}">
+                    <br>
 
-                <!--Submit and Reset-->
-                <tr>
-                    <td>
-                        <input type="submit" value="Submit"/>
-                        <input type="reset" value="Reset"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
+                    <!--Temperature-->
+                    <label>Temperature</label>
+                    <input th:field="*{temperature}" type="number" min="-15" max="30" th:value="${roomstate.getTemperature()}">
+                    <br>
+
+                    <!--Submit and Reset-->
+                    <input class="btn btn-primary" type="submit" value="Set">
+                    <input class="btn btn-link" type="reset" value="Reset">
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!----Scripts---->
+        <!--jQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+
         <!--Bootstrap 4-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 
-        <!--jQuery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/control.js"></script>
 
         <!--LiveReload-->
