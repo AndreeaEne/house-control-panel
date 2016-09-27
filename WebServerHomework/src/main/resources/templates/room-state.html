@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <title>House Control Panel</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/control.js"></script>
+        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <body>
+
+        <!--Test Data-->
+        <p th:text="'Lights are on = ' + ${roomstate.getLight()}" />
+        <p th:text="'Curtains are on = ' + ${roomstate.getCurtains()}" />
+        <p th:text="'Temperature = ' + ${roomstate.getTemperature()}" />
+
+        <!--Control panel Form-->
+        <form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
+            <table border="1">
+                <!--Lights-->
+                <tr>
+                    <td><label>Light Switch</label></td>
+                    <td><input th:field="*{light}" type="checkbox"  th:checked="${roomstate.getLight()}">
+                </tr>
+
+                <!--Curtains-->
+                <tr>
+                    <td><label>Curtains Switch</label></td>
+                    <td><input th:field="*{curtains}" type="checkbox" th:checked="${roomstate.getCurtains()}">
+                </tr>
+
+                <!--Temperature-->
+                <tr>
+                    <td><label>Temperature</label></td>
+                    <td><input th:field="*{temperature}" type="number" min="-15" max="30" th:value="${roomstate.getTemperature()}">
+                </tr>
+
+                <!--Submit and Reset-->
+                <tr>
+                    <td>
+                        <input type="submit" value="Submit"/>
+                        <input type="reset" value="Reset"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <!--<form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">-->
+            <!--Light Switch <br>-->
+            <!--&lt;!&ndash;th:checked="${roomstate.getContent()}"&ndash;&gt;-->
+            <!--&lt;!&ndash;<input th:field="*{test}" type="checkbox" >&ndash;&gt;-->
+            <!--<input type="submit" value="Submit">-->
+        <!--</form>-->
+    </body>
+
+</html>
