@@ -1,8 +1,7 @@
 // TODO: Use jQuery
 
 
-
-$( function () {
+$(function () {
     handleLights();
     handleTemperature();
 });
@@ -14,9 +13,11 @@ function handleLights() {
 
     var setClass = function () {
         button.removeClass('lights-on lights-off');
-        button.addClass(formInput.is(':checked') ?
-            'lights-on' :
-            'lights-off');
+        $("body").removeClass('lights-on lights-off');
+
+        var statusClass = formInput.is(':checked') ? 'lights-on' : 'lights-off';
+        button.addClass(statusClass);
+        $("body").addClass(statusClass);
     };
 
     setClass();  // Initialization

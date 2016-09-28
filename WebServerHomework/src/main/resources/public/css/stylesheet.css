@@ -13,11 +13,62 @@
 .hidden-form-control {
     display: none;
 }
-
-button.lights-on:before {
-    content: 'Turn off';
+/*Lights*/
+button.lights-on {
+    background-color: white;
+    color: black;
 }
 
-button.lights-off:before {
-    content: 'Turn on';
-}´
+button.lights-on:after {
+    content: 'Turn off';
+    margin-left: .5em;
+}
+
+button.lights-off {
+    background-color: black;
+    color: white;
+}
+
+button.lights-off:hover {
+    background-color: #303030;
+    color: white;
+}
+
+button.lights-off:after {
+    content: 'Turn on ';
+    margin-left: .5em;
+}
+
+body.lights-on {
+    background-color: white;
+    -webkit-animation-name: turn-lights-on;
+    -moz-animation-name: turn-lights-on;
+    -o-animation-name: turn-lights-on;
+    animation-name: turn-lights-on;
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    -o-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+
+body.lights-off {
+    background-color: black;
+    -webkit-animation-name: turn-lights-off;
+    -moz-animation-name: turn-lights-off;
+    -o-animation-name: turn-lights-off;
+    animation-name: turn-lights-off;
+    -webkit-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    -o-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+
+@keyframes turn-lights-off {
+    from {background-color: white;}
+    to {background-color: black;}
+}
+
+@keyframes turn-lights-on {
+    from {background-color: black;}
+    to {background-color: white;}
+}

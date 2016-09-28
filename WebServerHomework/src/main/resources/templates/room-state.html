@@ -31,7 +31,7 @@
         <h3 class="card-title">Home Control</h3>
 
         <!--Control panel Form-->
-        <div action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
+        <form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
             <!--Lights-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Lights</label>
@@ -67,7 +67,6 @@
 
             <!--Submit-->
             <input class="btn btn-primary" type="submit" value="Set">
-        </div>
         </form>
     </div>
 
