@@ -34,11 +34,15 @@ function handleTemperature() {
     var slider = $("#temperature-slider");
     noUiSlider.create(slider.get(0), {
         start: 0,
-        tooltips: true,
+        tooltips: {
+            to: function (n) {
+                return Math.round(n).toString();
+            }
+        },
         range: {
             min: -5,
             max: 30
-        },
+        }
     });
 
 }

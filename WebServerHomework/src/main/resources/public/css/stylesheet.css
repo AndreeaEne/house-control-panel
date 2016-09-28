@@ -13,13 +13,45 @@
 .hidden-form-control {
     display: none;
 }
+
+.temperature-icon {
+    width: 1em;
+}
+
+#temperature-slider {
+    margin-top: 5px;
+}
+
+/* Hide bar and handle shadow and off-white background */
+#temperature-slider.noUi-target,
+#temperature-slider .noUi-handle {
+    box-shadow: none;
+    background: white;
+}
+/* Hide handle center marking */
+#temperature-slider .noUi-handle::before,
+#temperature-slider .noUi-handle::after {
+    display: none;
+}
+#temperature-slider .noUi-handle {
+    /*width: 20px;*/
+}
+#temperature-slider .noUi-tooltip {
+    top: 28px;
+    left: 2px;
+    border: none;
+    color: #0275d8;  /* Bootstrap 4 primary color */
+    font-weight: 500;
+    text-align: center;
+}
+
 /*Lights*/
 button.lights-on {
     background-color: white;
     color: black;
 }
 
-button.lights-on:after {
+button.lights-on::after {
     content: 'Turn off';
     margin-left: .5em;
 }
@@ -34,7 +66,7 @@ button.lights-off:hover {
     color: white;
 }
 
-button.lights-off:after {
+button.lights-off::after {
     content: 'Turn on ';
     margin-left: .5em;
 }
