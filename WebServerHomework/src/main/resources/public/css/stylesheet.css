@@ -1,10 +1,23 @@
-.container {
+.centering-parent {
     width: 80%;
     height: 100vh;
     display: flex;
 }
 
-.card {
-    width: 20rem;
+.centered {
+    width: 22rem;
     margin: auto;
+    background-color: white;
 }
+
+.hidden-form-control {
+    display: none;
+}
+
+button.lights-on:before {
+    content: 'Turn off';
+}
+
+button.lights-off:before {
+    content: 'Turn on';
+}´

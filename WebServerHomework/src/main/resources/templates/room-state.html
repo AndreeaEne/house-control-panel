@@ -1,66 +1,99 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-    <head>
+<head>
 
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--Mobile-->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>House Control Panel</title>
+    <title>House Control Panel</title>
 
-        <!---Style--->
-        <!--Bootstrap 4-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/stylesheet.css">
+    <!---Style--->
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
+          integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stylesheet.css">
 
-    <body>
+    <!--noUiSlider-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.css">
 
-        <div class="container">
+    <!--FontAwesome-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-            <div class="card card-block m-x-auto text-xs-center">
-                <h3 class="card-title">Control Panel</h3>
-                <p class="card-text">Set the following parameters in order to adjust your room.</p>
+<body>
 
-                <!--Control panel Form-->
-                <form action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
-                    <div class="form-group">
-                    <!--Lights-->
-                    <label>Light Switch</label>
-                    <input th:field="*{light}" type="checkbox"  th:checked="${roomstate.getLight()}">
-                    <br>
+<div class="container centering-parent">
 
-                    <!--Curtains-->
-                    <label>Curtains Switch</label>
-                    <input th:field="*{curtains}" type="checkbox" th:checked="${roomstate.getCurtains()}">
-                    <br>
+    <div class="card card-block centered">
+        <h3 class="card-title">Home Control</h3>
 
-                    <!--Temperature-->
-                    <label>Temperature</label>
-                    <input th:field="*{temperature}" type="number" min="-15" max="30" th:value="${roomstate.getTemperature()}">
-                    <br>
-
-                    <!--Submit and Reset-->
-                    <input class="btn btn-primary" type="submit" value="Set">
-                    <input class="btn btn-link" type="reset" value="Reset">
-                    </div>
-                </form>
+        <!--Control panel Form-->
+        <div action="#" th:action="@{/room-state}" th:object="${roomstate}" method="post">
+            <!--Lights-->
+            <div class="form-group row">
+                <label class="col-form-label col-sm-3">Lights</label>
+                <input id=lights-form-input class="hidden-form-control" type="checkbox"
+                       th:field="*{light}" th:checked="${roomstate.getLight()}">
+                <div class="col-sm-9">
+                    <button id=lights-button class="btn btn-secondary lights-on">
+                        <i class="fa fa-lightbulb-o"></i>
+                    </button>
+                </div>
             </div>
+
+            <!--Curtains-->
+            <div class="form-group row">
+                <label class="col-form-label col-sm-3">Curtains</label>
+                <input id=curtains-form-input class="hidden-form-control" type="checkbox"
+                       th:field="*{curtains}" th:checked="${roomstate.getCurtains()}">
+                <div class="col-sm-9">
+                    <button class="btn btn-secondary">Close</button>
+                    <button class="btn btn-primary">Half</button>
+                    <button class="btn btn-secondary">Open</button>
+                </div>
+            </div>
+            <!--Temperature-->
+            <div class="form-group row">
+                <label class="col-form-label col-sm-3">Temp.</label>
+                <input id=temp-form-input class="hidden-form-control" type="number"
+                       th:field="*{temperature}" th:value="${roomstate.getTemperature()}">
+                <div class="col-sm-9">
+                    <div id="temperature-slider"></div>
+                </div>
+            </div>
+
+            <!--Submit-->
+            <input class="btn btn-primary" type="submit" value="Set">
         </div>
+        </form>
+    </div>
 
-        <!----Scripts---->
-        <!--jQuery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
+    <!----Scripts---->
+    <!--jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
+            integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY"
+            crossorigin="anonymous"></script>
 
-        <!--Bootstrap 4-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+    <!--Bootstrap 4-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"
+            integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
+            integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
+            crossorigin="anonymous"></script>
 
-        <script src="js/control.js"></script>
+    <!--LiveReload-->
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 
-        <!--LiveReload-->
-        <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-    </body>
+    <!--noUiSlider-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
+
+    <script src="js/control.js"></script>
+
+
+</body>
 
 </html>
