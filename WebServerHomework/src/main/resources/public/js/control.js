@@ -4,36 +4,51 @@ const MAX_TEMP = 40;
 const TEMP_SCALE = chroma.scale(['0c00ad', '38e4f0', 'ffea00', 'f59218', 'f03818'])
     .domain([MIN_TEMP, MAX_TEMP]);
 
-$(function () {
-    handleLights();
-    handleTemperature();
-    handleCurtains();
-});
+class State {
+    constructor() {
+        var self = this; // for closures
 
-// Lights
-function handleLights() {
-    var button_lights = $('#lights-button');
-    var formInput = $('#lights-form-input');
-    var body = $("body");
+        // Cache DOM elements
+        this.body = $("body");
 
-    var setClass = function () {
-        button_lights.removeClass('btn-primary btn-secondary');
-        body.removeClass('lights-on lights-off');
+        this.lightsFormInput = $('#lights-form-input');
+        this.lightsButton = $('#lights-button');
+        this.lightsButton.click(function (event) {
+            event.preventDefault();  // Don't send request.
+            self.isLightOn = !self.isLightOn;
+        });
 
-        var isChecked = formInput.is(':checked');
-        button_lights.addClass(isChecked ? 'btn-primary' : 'btn-secondary');
-        body.addClass(isChecked ? 'lights-on' : 'lights-off');
-    };
+        // Visual elements to reflect db status
+        this.isLightOn = this.isLightOn;
+    }
 
-    setClass();  // Initialization
+    get isLightOn() {
+        return this.lightsFormInput.is(':checked');
+    }
+    set isLightOn(newValue) {
+        this.lightsButton
+            .removeClass('btn-primary btn-secondary')
+            .addClass(newValue ? 'btn-primary' : 'btn-secondary');
 
-    button_lights.click(function (event) {
-        event.preventDefault();  // Don't send request.
+        this.body
+            .removeClass('lights-on lights-off')
+            .addClass(newValue ? 'lights-on' : 'lights-off');
 
-        formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
-        setClass();
-    });
+        this.lightsFormInput.attr('checked', newValue);
+    }
+
+    calcArea() {
+        return this.height * this.width;
+    }
 }
+
+const state = new State();
+
+
+$(function () {
+    handleCurtains();
+    handleTemperature();
+});
 
 // Curtains
 function handleCurtains() {
