@@ -5,7 +5,7 @@ public class RoomState {
     // TODO read from filesystem
     private boolean light = true;
     private boolean curtains = false;
-    private int temperature = -10;
+    private int temperature = 20;
 
     // Getters
     public boolean getLight()  {return  light;}

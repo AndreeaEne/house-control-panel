@@ -38,9 +38,7 @@
                 <input id=lights-form-input class="hidden-form-control" type="checkbox"
                        th:field="*{light}" th:checked="${roomstate.getLight()}">
                 <div class="col-sm-9">
-                    <button id=lights-button class="btn btn-secondary lights-on">
-                        <i class="fa fa-lightbulb-o"></i>
-                    </button>
+                    <button id=lights-button class="btn btn-secondary lights-on"></button>
                 </div>
             </div>
 
@@ -49,12 +47,13 @@
                 <label class="col-form-label col-sm-3">Curtains</label>
                 <input id=curtains-form-input class="hidden-form-control" type="checkbox"
                        th:field="*{curtains}" th:checked="${roomstate.getCurtains()}">
-                <div class="col-sm-9">
-                    <button class="btn btn-secondary">Close</button>
-                    <button class="btn btn-primary">Half</button>
-                    <button class="btn btn-secondary">Open</button>
+                <div class="col-sm-9 curtains-buttons">
+                    <button id="curt-close" class="btn btn-secondary">Close</button>
+                    <button id="curt-half" class="btn btn-secondary">Half</button>
+                    <button id="curt-open" class="btn btn-secondary">Open</button>
                 </div>
             </div>
+
             <!--Temperature-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Temp.</label>
@@ -69,7 +68,7 @@
             </div>
 
             <!--Submit-->
-            <input class="btn btn-primary" type="submit" value="Set">
+            <!--<input id=submit-button class="btn btn-primary" type="submit" value="Set">-->
         </form>
     </div>
 </div>
@@ -94,8 +93,10 @@
 <!--noUiSlider-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
 
-<script src="js/control.js"></script>
+<!--Chroma-->
+<script src="https://cdn.bootcss.com/chroma-js/1.2.1/chroma.min.js"></script>
 
+<script src="js/control.js"></script>
 
 </body>
 

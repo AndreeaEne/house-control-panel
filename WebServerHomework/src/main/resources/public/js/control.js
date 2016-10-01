@@ -1,28 +1,33 @@
-// TODO: Use jQuery
-
+// Configs
+const MIN_TEMP = -10;
+const MAX_TEMP = 40;
+const TEMP_SCALE = chroma.scale(['0c00ad', '38e4f0', 'ffea00', 'f59218', 'f03818'])
+    .domain([MIN_TEMP, MAX_TEMP]);
 
 $(function () {
     handleLights();
     handleTemperature();
+    handleCurtains();
 });
 
-
+// Lights
 function handleLights() {
-    var button = $('#lights-button');
+    var button_lights = $('#lights-button');
     var formInput = $('#lights-form-input');
+    var body = $("body");
 
     var setClass = function () {
-        button.removeClass('lights-on lights-off');
-        $("body").removeClass('lights-on lights-off');
+        button_lights.removeClass('btn-primary btn-secondary');
+        body.removeClass('lights-on lights-off');
 
-        var statusClass = formInput.is(':checked') ? 'lights-on' : 'lights-off';
-        button.addClass(statusClass);
-        $("body").addClass(statusClass);
+        var isChecked = formInput.is(':checked');
+        button_lights.addClass(isChecked ? 'btn-primary' : 'btn-secondary');
+        body.addClass(isChecked ? 'lights-on' : 'lights-off');
     };
 
     setClass();  // Initialization
 
-    button.click(function (event) {
+    button_lights.click(function (event) {
         event.preventDefault();  // Don't send request.
 
         formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
@@ -30,22 +35,102 @@ function handleLights() {
     });
 }
 
-function handleTemperature() {
-    var slider = $("#temperature-slider");
-    noUiSlider.create(slider.get(0), {
-        start: 0,
-        tooltips: {
-            to: function (n) {
-                return Math.round(n).toString();
-            }
-        },
-        range: {
-            min: -5,
-            max: 30
+// Curtains
+function handleCurtains() {
+    var curtains_buttons = $('.curtains-buttons');
+    var formInput = $('#curtains-form-input');
+
+    curtains_buttons.click(function (event) {
+        event.preventDefault(); // Don't send request.
+    });
+
+    var curt_closed = $('#curt-close');
+    var curt_opened = $('#curt-open');
+    var setClass = function () {
+        $("body").removeClass('curtains-on curtains-off');
+
+        curt_opened.removeClass('btn-primary');
+        curt_closed.removeClass('btn-primary');
+
+        var statusClass = formInput.is(':checked') ? 'curtains-on' : 'curtains-off';
+        // button_lights.addClass(statusClass);
+        $("body").addClass(statusClass);
+
+        if (!formInput.is(':checked')) {
+            curt_closed.addClass('btn-primary');
+            curt_closed.removeClass('btn-secondary');
+        }
+        else {
+            curt_opened.addClass('btn-primary');
+            curt_opened.removeClass('btn-secondary');
+        }
+    }
+    setClass(); // Initialization
+
+    curt_closed.click(function (event) {
+        if (!curt_closed.hasClass("btn-primary")) {
+            curt_opened.addClass("btn-secondary");
+            curt_closed.addClass("btn-primary");
+            formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
+            setClass();
+        }
+    });
+
+    curt_opened.click(function (event) {
+        if (!curt_opened.hasClass("btn-primary")) {
+            curt_closed.addClass("btn-secondary");
+            curt_opened.addClass("btn-primary");
+            formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
+            setClass();
         }
     });
 
 }
 
+var slider = $("#temperature-slider");
+function handleTemperature() {
 
+    var formInput = $('#temp-form-input');
+    var temperature_value = formInput.val();
+
+    // Create slider
+    noUiSlider.create(slider.get(0), {
+        start: temperature_value,
+        range: {
+            min: MIN_TEMP,
+            max: MAX_TEMP
+        }
+    });
+
+
+    // Bind the color changing function
+    // to the slide event.
+    slider.get(0).noUiSlider.on('slide', setTempColor);
+
+
+    // Set new slider value.
+    // TODO: Takes the value only when the button is pressed?
+    var submit_button = $('#submit-button');
+    submit_button.click(function (event) {
+        var new_value = Math.round(slider.get(0).noUiSlider.get());
+        formInput.attr('value', new_value);
+    });
+}
+
+// This is needed because there is no 'box-shadow-color' property
+const uncoloredBorderProps = $('.card-block').css('box-shadow');
+
+// Set the temperature color for the border.
+function setTempColor() {
+    // Get the slider values,
+    var sliderValue = slider.get(0).noUiSlider.get();
+    $('#temperature-slider .noUi-handle').text(Math.round(sliderValue));
+    var color = TEMP_SCALE(sliderValue).hex();
+
+    // Fill the color box.
+    $('.card-block')
+        .css('border-color', color)
+        // .css('background-color', color);
+        // .css('box-shadow', uncoloredBorderProps + ' ' + color);
+}
 
