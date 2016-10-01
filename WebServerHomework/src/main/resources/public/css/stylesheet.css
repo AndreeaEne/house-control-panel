@@ -107,3 +107,7 @@ body.lights-off {
 label img {
     height: 2em;
 }
+
+#slider-wrapper {
+    padding-top: 7px;
+}

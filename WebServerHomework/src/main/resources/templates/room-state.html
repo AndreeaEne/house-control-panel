@@ -45,8 +45,8 @@
             <!--Curtains-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Curtains</label>
-                <input id=curtains-form-input class="hidden-form-control" type="checkbox"
-                       th:field="*{curtains}" th:checked="${roomstate.getCurtains()}">
+                <input id=curtains-form-input class="hidden-form-control" type="number"
+                       th:field="*{curtains}" th:value="${roomstate.getCurtains()}">
                 <div class="col-sm-9 curtains-buttons">
                     <button id="curt-close" class="btn btn-secondary">Close</button>
                     <button id="curt-half" class="btn btn-secondary">Half</button>
@@ -59,7 +59,7 @@
                 <label class="col-form-label col-sm-3">Temp.</label>
                 <input id=temp-form-input class="hidden-form-control" type="number"
                        th:field="*{temperature}" th:value="${roomstate.getTemperature()}">
-                <div class="col-sm-9">
+                <div id="slider-wrapper" class="col-sm-9">
                     <div class="col-sm-2"><img class="temperature-icon" src="img/snowflake.svg" alt="cold indicator">
                     </div>
                     <div id="temperature-slider" class="col-sm-8"></div>

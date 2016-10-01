@@ -10,7 +10,9 @@ class State {
 
         // Cache DOM elements
         this.body = $("body");
+        this.card = $('.card-block');
 
+        // Lights
         this.lightsFormInput = $('#lights-form-input');
         this.lightsButton = $('#lights-button');
         this.lightsButton.click(function (event) {
@@ -18,8 +20,29 @@ class State {
             self.isLightOn = !self.isLightOn;
         });
 
+
+        // Temperature
+        this.temperatureFormInput = $('#temp-form-input');
+        this.sliderDiv = $('#temperature-slider');
+
+        noUiSlider.create(this.sliderDiv.get(0), {
+            start: self.temperatureFormInput.val(),
+            range: {
+                min: MIN_TEMP,
+                max: MAX_TEMP
+            }
+        });
+        this.slider = this.sliderDiv.get(0).noUiSlider;
+        this.temperatureHandler = this.sliderDiv.find('.noUi-handle');
+
+        this.slider.on('slide', function() {
+            self.temperature = self.temperature;
+        });
+
+
         // Visual elements to reflect db status
         this.isLightOn = this.isLightOn;
+        this.temperature = this.temperature;
     }
 
     get isLightOn() {
@@ -37,8 +60,17 @@ class State {
         this.lightsFormInput.attr('checked', newValue);
     }
 
-    calcArea() {
-        return this.height * this.width;
+    get temperature() {
+        return this.slider.get()
+    }
+
+    set temperature(newValue) {
+        this.temperatureHandler.text(Math.round(newValue));
+
+        var color = TEMP_SCALE(newValue).hex();
+        this.card.css('border-color', color);
+
+        this.temperatureFormInput.attr('value', newValue);
     }
 }
 
@@ -47,7 +79,6 @@ const state = new State();
 
 $(function () {
     handleCurtains();
-    handleTemperature();
 });
 
 // Curtains
@@ -100,52 +131,5 @@ function handleCurtains() {
         }
     });
 
-}
-
-var slider = $("#temperature-slider");
-function handleTemperature() {
-
-    var formInput = $('#temp-form-input');
-    var temperature_value = formInput.val();
-
-    // Create slider
-    noUiSlider.create(slider.get(0), {
-        start: temperature_value,
-        range: {
-            min: MIN_TEMP,
-            max: MAX_TEMP
-        }
-    });
-
-
-    // Bind the color changing function
-    // to the slide event.
-    slider.get(0).noUiSlider.on('slide', setTempColor);
-
-
-    // Set new slider value.
-    // TODO: Takes the value only when the button is pressed?
-    var submit_button = $('#submit-button');
-    submit_button.click(function (event) {
-        var new_value = Math.round(slider.get(0).noUiSlider.get());
-        formInput.attr('value', new_value);
-    });
-}
-
-// This is needed because there is no 'box-shadow-color' property
-const uncoloredBorderProps = $('.card-block').css('box-shadow');
-
-// Set the temperature color for the border.
-function setTempColor() {
-    // Get the slider values,
-    var sliderValue = slider.get(0).noUiSlider.get();
-    $('#temperature-slider .noUi-handle').text(Math.round(sliderValue));
-    var color = TEMP_SCALE(sliderValue).hex();
-
-    // Fill the color box.
-    $('.card-block')
-        .css('border-color', color)
-        // .css('background-color', color);
-        // .css('box-shadow', uncoloredBorderProps + ' ' + color);
 }
 
