@@ -14,6 +14,8 @@ class State {
         this.lightsButton.click(function (event) {
             event.preventDefault();  // Don't send request.
             self.isLightOn = !self.isLightOn;
+
+            self.submit();
         });
 
         // Curtains
@@ -21,6 +23,8 @@ class State {
             event.preventDefault();  // Don't send request.
             var target = $(event.target);
             self.curtainsStatus = target.attr('status');
+
+            self.submit();
         });
 
         // Temperature
@@ -37,6 +41,11 @@ class State {
         this.slider.on('slide', function () {
             self.temperature = self.temperature;
         });
+
+        this.slider.on('change', function () {
+            self.submit();
+        });
+
 
         this.initialiseVisual();
     }
@@ -78,17 +87,6 @@ class State {
             .addClass(newValue ? 'lights-on' : 'lights-off');
     }
 
-    get temperature() {
-        return this.slider.get()
-    }
-
-    set temperature(newValue) {
-        this.temperatureHandler.text(Math.round(newValue));
-
-        var color = TEMP_SCALE(newValue).hex();
-        this.card.css('border-color', color);
-    }
-
     get curtainsStatus() {
         var status = this.curtainsButtons.filter('.btn-primary').attr('status');
         return +status; // toNumber
@@ -101,6 +99,26 @@ class State {
             $(button).addClass(index == newValue ? 'btn-primary' : 'btn-secondary');
         })
 
+    }
+
+    get temperature() {
+        return this.slider.get()
+    }
+
+    set temperature(newValue) {
+        this.temperatureHandler.text(Math.round(newValue));
+
+        var color = TEMP_SCALE(newValue).hex();
+        this.card.css('border-color', color);
+    }
+
+    submit(){
+        var self = this;
+        $.post('/room-state', {
+            isLightOn: self.isLightOn,
+            curtainsStatus: self.curtainsStatus,
+            temperature: self.temperature
+        });
     }
 }
 
