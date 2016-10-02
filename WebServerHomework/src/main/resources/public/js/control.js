@@ -8,25 +8,17 @@ class State {
     constructor() {
         var self = this; // for closures
 
-        // Cache DOM elements
-        this.body = $("body");
-        this.card = $('.card-block');
+        this.cacheDOMElements();
 
         // Lights
-        this.lightsFormInput = $('#lights-form-input');
-        this.lightsButton = $('#lights-button');
         this.lightsButton.click(function (event) {
             event.preventDefault();  // Don't send request.
             self.isLightOn = !self.isLightOn;
         });
 
-
         // Temperature
-        this.temperatureFormInput = $('#temp-form-input');
-        this.sliderDiv = $('#temperature-slider');
-
         noUiSlider.create(this.sliderDiv.get(0), {
-            start: self.temperatureFormInput.val(),
+            start: self.sliderDiv.attr('start'),
             range: {
                 min: MIN_TEMP,
                 max: MAX_TEMP
@@ -39,15 +31,33 @@ class State {
             self.temperature = self.temperature;
         });
 
+        this.initialiseVisual();
+    }
 
-        // Visual elements to reflect db status
+    cacheDOMElements() {
+        // jQuery queries are expensive.
+        this.body = $("body");
+        this.card = $('.card-block');
+
+        // Lights
+        this.lightsButton = $('#lights-button');
+
+        // Temperature
+        this.sliderDiv = $('#temperature-slider');
+    }
+
+    initialiseVisual() {
+        // Elements have their value from backend
+        // but they aren't visually reflected.
+        // (eg: page background - black/white)
         this.isLightOn = this.isLightOn;
         this.temperature = this.temperature;
     }
 
     get isLightOn() {
-        return this.lightsFormInput.is(':checked');
+        return this.lightsButton.hasClass('btn-primary');
     }
+
     set isLightOn(newValue) {
         this.lightsButton
             .removeClass('btn-primary btn-secondary')
@@ -56,21 +66,16 @@ class State {
         this.body
             .removeClass('lights-on lights-off')
             .addClass(newValue ? 'lights-on' : 'lights-off');
-
-        this.lightsFormInput.attr('checked', newValue);
     }
 
     get temperature() {
         return this.slider.get()
     }
-
     set temperature(newValue) {
         this.temperatureHandler.text(Math.round(newValue));
 
         var color = TEMP_SCALE(newValue).hex();
         this.card.css('border-color', color);
-
-        this.temperatureFormInput.attr('value', newValue);
     }
 }
 

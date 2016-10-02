@@ -38,7 +38,7 @@
                 <input id=lights-form-input class="hidden-form-control" type="checkbox"
                        th:field="*{light}" th:checked="${roomstate.getLight()}">
                 <div class="col-sm-9">
-                    <button id=lights-button class="btn btn-secondary lights-on"></button>
+                    <button id=lights-button class="btn" th:classappend="${roomstate.getLight()} ? btn-primary : btn-secondary"></button>
                 </div>
             </div>
 
@@ -57,12 +57,11 @@
             <!--Temperature-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Temp.</label>
-                <input id=temp-form-input class="hidden-form-control" type="number"
-                       th:field="*{temperature}" th:value="${roomstate.getTemperature()}">
+                <!--<input id=temp-form-input class="hidden-form-control" type="number"-->
+                       <!--th:field="*{temperature}" th:value="${roomstate.getTemperature()}">-->
                 <div id="slider-wrapper" class="col-sm-9">
-                    <div class="col-sm-2"><img class="temperature-icon" src="img/snowflake.svg" alt="cold indicator">
-                    </div>
-                    <div id="temperature-slider" class="col-sm-8"></div>
+                    <div class="col-sm-2"><img class="temperature-icon" src="img/snowflake.svg" alt="cold indicator"></div>
+                    <div id="temperature-slider" class="col-sm-8" data-th-attr="start=${roomstate.getTemperature()}"></div>
                     <div class="col-sm-2"><img class="temperature-icon" src="img/fire.svg" alt="hot indicator"></div>
                 </div>
             </div>
