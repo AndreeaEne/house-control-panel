@@ -124,7 +124,7 @@ class State {
 
     submit() {
         var self = this;
-        $.post('/room-state', {
+        $.post('/', {
             isLightOn:      self.isLightOn,
             curtainsStatus: self.curtainsStatus,
             temperature:    self.temperature

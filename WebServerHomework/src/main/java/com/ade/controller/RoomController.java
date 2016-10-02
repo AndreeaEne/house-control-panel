@@ -20,13 +20,13 @@ public class RoomController {
         roomState = new RoomState();
     }
 
-    @GetMapping("/room-state")
+    @GetMapping("/")
     public String controlShow(Model model) {
         model.addAttribute("roomstate", roomState);
         return "room-state";
     }
 
-    @PostMapping("/room-state")
+    @PostMapping("/")
     public String controlSubmit(boolean isLightOn, int curtainsStatus, double temperature) throws JSONException, FileNotFoundException, UnsupportedEncodingException {
         roomState.setLight(isLightOn);
         roomState.setCurtains(curtainsStatus);
