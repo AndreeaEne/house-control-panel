@@ -2,26 +2,19 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!--Mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">     <!--Mobile-->
 
     <title>House Control Panel</title>
 
     <!---Style--->
-    <!--Bootstrap 4-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css"
           integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/stylesheet.css">
-
-    <!--noUiSlider-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.css">
-
-    <!--FontAwesome-->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/stylesheet.css">
 
 <body>
 
@@ -35,34 +28,45 @@
             <!--Lights-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Lights</label>
+
                 <input id=lights-form-input class="hidden-form-control" type="checkbox"
                        th:field="*{light}" th:checked="${roomstate.getLight()}">
                 <div class="col-sm-9">
-                    <button id=lights-button class="btn" th:classappend="${roomstate.getLight()} ? btn-primary : btn-secondary"></button>
+                    <button id=lights-button class="btn"
+                            th:classappend="${roomstate.getLight()} ? btn-primary : btn-secondary"></button>
                 </div>
             </div>
 
             <!--Curtains-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Curtains</label>
-                <!--<input id=curtains-form-input class="hidden-form-control" type="number"-->
-                       <!--th:field="*{curtains}" th:value="${roomstate.getCurtains()}">-->
+
                 <div class="col-sm-9 curtains-buttons">
-                    <button status="0" class="btn" th:classappend="${roomstate.getCurtains()} == 0 ? btn-primary : btn-secondary">Close</button>
-                    <button status="1" class="btn" th:classappend="${roomstate.getCurtains()} == 1 ? btn-primary : btn-secondary">Half</button>
-                    <button status="2" class="btn" th:classappend="${roomstate.getCurtains()} == 2 ? btn-primary : btn-secondary">Open</button>
+                    <button status="0" class="btn"
+                            th:classappend="${roomstate.getCurtains()} == 0 ? btn-primary : btn-secondary">Close
+                    </button>
+                    <button status="1" class="btn"
+                            th:classappend="${roomstate.getCurtains()} == 1 ? btn-primary : btn-secondary">Half
+                    </button>
+                    <button status="2" class="btn"
+                            th:classappend="${roomstate.getCurtains()} == 2 ? btn-primary : btn-secondary">Open
+                    </button>
                 </div>
             </div>
 
             <!--Temperature-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Temp.</label>
-                <!--<input id=temp-form-input class="hidden-form-control" type="number"-->
-                       <!--th:field="*{temperature}" th:value="${roomstate.getTemperature()}">-->
+
                 <div id="slider-wrapper" class="col-sm-9">
-                    <div class="col-sm-2"><img class="temperature-icon" src="img/snowflake.svg" alt="cold indicator"></div>
-                    <div id="temperature-slider" class="col-sm-8" data-th-attr="start=${roomstate.getTemperature()}"></div>
-                    <div class="col-sm-2"><img class="temperature-icon" src="img/fire.svg" alt="hot indicator"></div>
+                    <div class="col-sm-2">
+                        <img class="temperature-icon" src="img/snowflake.svg" alt="cold indicator">
+                    </div>
+                    <div id="temperature-slider" class="col-sm-8"
+                         data-th-attr="start=${roomstate.getTemperature()}"></div>
+                    <div class="col-sm-2">
+                        <img class="temperature-icon" src="img/fire.svg" alt="hot indicator">
+                    </div>
                 </div>
             </div>
 
@@ -70,35 +74,24 @@
                 <strong>Warning!</strong> Temperature is too <span id="type"></span>.
             </div>
 
-            <!--Submit-->
-            <!--<input id=submit-button class="btn btn-primary" type="submit" value="Set">-->
         </form>
     </div>
 </div>
 
 <!----Scripts---->
-<!--jQuery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"
         integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY"
         crossorigin="anonymous"></script>
-
-<!--Bootstrap 4-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"
         integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB"
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js"
         integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU"
         crossorigin="anonymous"></script>
-
-<!--LiveReload-->
+<!--For debugging-->
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
-<!--noUiSlider-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
-
-<!--Chroma-->
 <script src="https://cdn.bootcss.com/chroma-js/1.2.1/chroma.min.js"></script>
-
 <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
 <script type="text/babel" src="js/control.js"></script>
 

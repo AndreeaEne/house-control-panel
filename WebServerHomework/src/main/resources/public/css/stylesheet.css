@@ -1,58 +1,37 @@
+/* Layout */
 .centering-parent {
     width: 80%;
     height: 100vh;
     display: flex;
 }
-
 .centered {
     width: 22rem;
     margin: auto;
     background-color: white;
 }
 
+.card {
+    padding-bottom: 5px;
+}
+.card-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: darkgray;
+}
+
 .hidden-form-control {
     display: none;
 }
 
-.temperature-icon {
-    width: 1em;
+.row label{
+    text-align: right;
+    color: #69686f;
 }
 
-#temperature-slider {
-    margin-top: 5px;
-}
-
-/* Hide bar and handle shadow and off-white background */
-#temperature-slider.noUi-target,
-#temperature-slider .noUi-handle {
-    box-shadow: none;
-    background: white;
-}
-/* Hide handle center marking */
-#temperature-slider .noUi-handle::before,
-#temperature-slider .noUi-handle::after {
-    display: none;
-}
-#temperature-slider .noUi-handle {
-    width: 45px;
-    height: 32px;
-    top: -7.5px;
-    background-color: #0275d8;
-    border: none;
-
-    color: white;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;  /* bootstrap default */
-    line-height: 32px;
-}
-#temperature-slider .noUi-tooltip {
-    display: none
-}
-
+/* Lights */
 #lights-button.btn-primary::after {
     content: 'Turn off';
 }
-
 #lights-button.btn-secondary::after {
     content: 'Turn on ';
 }
@@ -68,7 +47,6 @@ body.lights-on {
     -o-animation-duration: 0.5s;
     animation-duration: 0.5s;
 }
-
 body.lights-off {
     background-color: black;
     -webkit-animation-name: turn-lights-off;
@@ -85,32 +63,46 @@ body.lights-off {
     from {background-color: white;}
     to {background-color: black;}
 }
-
 @keyframes turn-lights-on {
     from {background-color: black;}
     to {background-color: white;}
 }
 
-
-.row label{
-    text-align: right;
-    color: #69686f;
-}
-
-.card-title {
-    text-align: center;
-    margin-bottom: 25px;
-    color: darkgray;
-}
-
-label img {
-    height: 2em;
+/* Temperature */
+.temperature-icon {
+    width: 1em;
 }
 
 #slider-wrapper {
     padding-top: 7px;
 }
+#temperature-slider {
+    margin-top: 5px;
+}
 
-.card-block {
-    padding-bottom: 5px;
+/* Hide bar and handle shadow and off-white background */
+#temperature-slider.noUi-target,
+#temperature-slider .noUi-handle {
+    box-shadow: none;
+    background: white;
+}
+
+/* Hide handle center marking */
+#temperature-slider .noUi-handle::before,
+#temperature-slider .noUi-handle::after {
+    display: none;
+}
+
+#temperature-slider .noUi-handle {
+    width: 45px;  /* Put text on the handle */
+    height: 32px;
+    top: -7.5px;
+    background-color: #0275d8;
+    border: none;
+
+    /* White text on blue background */
+    color: white;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;  /* Bootstrap 4 */
+    line-height: 32px;
 }

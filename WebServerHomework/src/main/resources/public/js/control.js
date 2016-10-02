@@ -43,8 +43,8 @@ class State {
         this.slider.on('slide', function () {
             self.temperature = self.temperature;
         });
-
         this.slider.on('change', function () {
+            // Sending a request for each 'slide' event is too much
             self.submit();
         });
 
@@ -55,7 +55,7 @@ class State {
     cacheDOMElements() {
         // jQuery queries are expensive.
         this.body = $("body");
-        this.card = $('.card-block');
+        this.card = $('.card');
 
         // Lights
         this.lightsButton = $('#lights-button');
@@ -79,7 +79,6 @@ class State {
     get isLightOn() {
         return this.lightsButton.hasClass('btn-primary');
     }
-
     set isLightOn(newValue) {
         this.lightsButton
             .removeClass('btn-primary btn-secondary')
@@ -94,7 +93,6 @@ class State {
         var status = this.curtainsButtons.filter('.btn-primary').attr('status');
         return +status; // toNumber
     }
-
     set curtainsStatus(newValue) {
         this.curtainsButtons.removeClass('btn-primary btn-secondary');
 
@@ -107,7 +105,6 @@ class State {
     get temperature() {
         return this.slider.get()
     }
-
     set temperature(newValue) {
         this.temperatureHandler.text(Math.round(newValue));
 
@@ -125,12 +122,12 @@ class State {
             this.temperatureWarning.slideUp();
     }
 
-    submit(){
+    submit() {
         var self = this;
         $.post('/room-state', {
-            isLightOn: self.isLightOn,
+            isLightOn:      self.isLightOn,
             curtainsStatus: self.curtainsStatus,
-            temperature: self.temperature
+            temperature:    self.temperature
         });
     }
 }
