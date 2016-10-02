@@ -17,7 +17,7 @@ class State {
         });
 
         // Curtains
-        $('.curtains-buttons .btn').click(function (event) {
+        this.curtainsButtons.click(function (event) {
             event.preventDefault();  // Don't send request.
             var target = $(event.target);
             self.curtainsStatus = target.attr('status');
@@ -50,7 +50,7 @@ class State {
         this.lightsButton = $('#lights-button');
 
         // Curtains
-
+        this.curtainsButtons = $('.curtains-buttons .btn');
 
         // Temperature
         this.sliderDiv = $('#temperature-slider');
@@ -90,14 +90,14 @@ class State {
     }
 
     get curtainsStatus() {
-        var status = $('.curtains-buttons .btn-primary').attr('status');
+        var status = this.curtainsButtons.filter('.btn-primary').attr('status');
         return +status; // toNumber
     }
 
     set curtainsStatus(newValue) {
-        $('.curtains-buttons .btn').removeClass('btn-primary btn-secondary');
+        this.curtainsButtons.removeClass('btn-primary btn-secondary');
 
-        $('.curtains-buttons .btn').each(function (index, button) {
+        this.curtainsButtons.each(function (index, button) {
             $(button).addClass(index == newValue ? 'btn-primary' : 'btn-secondary');
         })
 
