@@ -1,4 +1,4 @@
-# house-control-panel
+# House Control Panel
 
 Home control for lights, curtains, and temperature.
 
