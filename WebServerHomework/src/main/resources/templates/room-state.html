@@ -45,12 +45,12 @@
             <!--Curtains-->
             <div class="form-group row">
                 <label class="col-form-label col-sm-3">Curtains</label>
-                <input id=curtains-form-input class="hidden-form-control" type="number"
-                       th:field="*{curtains}" th:value="${roomstate.getCurtains()}">
+                <!--<input id=curtains-form-input class="hidden-form-control" type="number"-->
+                       <!--th:field="*{curtains}" th:value="${roomstate.getCurtains()}">-->
                 <div class="col-sm-9 curtains-buttons">
-                    <button id="curt-close" class="btn btn-secondary">Close</button>
-                    <button id="curt-half" class="btn btn-secondary">Half</button>
-                    <button id="curt-open" class="btn btn-secondary">Open</button>
+                    <button status="0" class="btn" th:classappend="${roomstate.getCurtains()} == 0 ? btn-primary : btn-secondary">Close</button>
+                    <button status="1" class="btn" th:classappend="${roomstate.getCurtains()} == 1 ? btn-primary : btn-secondary">Half</button>
+                    <button status="2" class="btn" th:classappend="${roomstate.getCurtains()} == 2 ? btn-primary : btn-secondary">Open</button>
                 </div>
             </div>
 

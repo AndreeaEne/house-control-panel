@@ -16,6 +16,13 @@ class State {
             self.isLightOn = !self.isLightOn;
         });
 
+        // Curtains
+        $('.curtains-buttons .btn').click(function (event) {
+            event.preventDefault();  // Don't send request.
+            var target = $(event.target);
+            self.curtainsStatus = target.attr('status');
+        });
+
         // Temperature
         noUiSlider.create(this.sliderDiv.get(0), {
             start: self.sliderDiv.attr('start'),
@@ -27,7 +34,7 @@ class State {
         this.slider = this.sliderDiv.get(0).noUiSlider;
         this.temperatureHandler = this.sliderDiv.find('.noUi-handle');
 
-        this.slider.on('slide', function() {
+        this.slider.on('slide', function () {
             self.temperature = self.temperature;
         });
 
@@ -41,6 +48,9 @@ class State {
 
         // Lights
         this.lightsButton = $('#lights-button');
+
+        // Curtains
+
 
         // Temperature
         this.sliderDiv = $('#temperature-slider');
@@ -71,70 +81,27 @@ class State {
     get temperature() {
         return this.slider.get()
     }
+
     set temperature(newValue) {
         this.temperatureHandler.text(Math.round(newValue));
 
         var color = TEMP_SCALE(newValue).hex();
         this.card.css('border-color', color);
     }
+
+    get curtainsStatus() {
+        var status = $('.curtains-buttons .btn-primary').attr('status');
+        return +status; // toNumber
+    }
+
+    set curtainsStatus(newValue) {
+        $('.curtains-buttons .btn').removeClass('btn-primary btn-secondary');
+
+        $('.curtains-buttons .btn').each(function (index, button) {
+            $(button).addClass(index == newValue ? 'btn-primary' : 'btn-secondary');
+        })
+
+    }
 }
 
 const state = new State();
-
-
-$(function () {
-    handleCurtains();
-});
-
-// Curtains
-function handleCurtains() {
-    var curtains_buttons = $('.curtains-buttons');
-    var formInput = $('#curtains-form-input');
-
-    curtains_buttons.click(function (event) {
-        event.preventDefault(); // Don't send request.
-    });
-
-    var curt_closed = $('#curt-close');
-    var curt_opened = $('#curt-open');
-    var setClass = function () {
-        $("body").removeClass('curtains-on curtains-off');
-
-        curt_opened.removeClass('btn-primary');
-        curt_closed.removeClass('btn-primary');
-
-        var statusClass = formInput.is(':checked') ? 'curtains-on' : 'curtains-off';
-        // button_lights.addClass(statusClass);
-        $("body").addClass(statusClass);
-
-        if (!formInput.is(':checked')) {
-            curt_closed.addClass('btn-primary');
-            curt_closed.removeClass('btn-secondary');
-        }
-        else {
-            curt_opened.addClass('btn-primary');
-            curt_opened.removeClass('btn-secondary');
-        }
-    }
-    setClass(); // Initialization
-
-    curt_closed.click(function (event) {
-        if (!curt_closed.hasClass("btn-primary")) {
-            curt_opened.addClass("btn-secondary");
-            curt_closed.addClass("btn-primary");
-            formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
-            setClass();
-        }
-    });
-
-    curt_opened.click(function (event) {
-        if (!curt_opened.hasClass("btn-primary")) {
-            curt_closed.addClass("btn-secondary");
-            curt_opened.addClass("btn-primary");
-            formInput.attr('checked', !formInput.is(':checked'));  // Invert checked status.
-            setClass();
-        }
-    });
-
-}
-

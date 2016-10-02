@@ -4,8 +4,8 @@ public class RoomState {
 
     // TODO read from filesystem
     private boolean light = true;
-    private int curtains = 1;  // TODO int
-    private float temperature = 20;  // TODO float
+    private int curtains = 1;
+    private float temperature = 20;
 
     // Getters
     public boolean getLight()  {return  light;}
