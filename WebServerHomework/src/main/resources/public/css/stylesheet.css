@@ -103,11 +103,14 @@ body.lights-off {
     color: darkgray;
 }
 
-
 label img {
     height: 2em;
 }
 
 #slider-wrapper {
     padding-top: 7px;
+}
+
+.card-block {
+    padding-bottom: 5px;
 }

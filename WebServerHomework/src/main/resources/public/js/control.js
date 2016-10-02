@@ -1,6 +1,8 @@
 // Configs
 const MIN_TEMP = -10;
 const MAX_TEMP = 40;
+const LOW_TEMP = 0;
+const HIGH_TEMP = 30;
 const TEMP_SCALE = chroma.scale(['0c00ad', '38e4f0', 'ffea00', 'f59218', 'f03818'])
     .domain([MIN_TEMP, MAX_TEMP]);
 
@@ -63,6 +65,7 @@ class State {
 
         // Temperature
         this.sliderDiv = $('#temperature-slider');
+        this.temperatureWarning = $('#temp-warning');
     }
 
     initialiseVisual() {
@@ -110,6 +113,16 @@ class State {
 
         var color = TEMP_SCALE(newValue).hex();
         this.card.css('border-color', color);
+
+        var isLow = newValue < LOW_TEMP,
+            isHigh = newValue > HIGH_TEMP;
+
+        if (isLow || isHigh)
+            this.temperatureWarning
+                .slideDown()
+                .find('#type').text(isHigh ? 'high' : 'low');
+        else
+            this.temperatureWarning.slideUp();
     }
 
     submit(){
